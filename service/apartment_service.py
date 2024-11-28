@@ -29,13 +29,15 @@ class ApartmentService():
         data_df.neighbourhood = data_df.neighbourhood.str.lower()
         data_df.neighbourhood  = self.le.transform(data_df.neighbourhood )
         data_df.neighbourhood  = data_df.neighbourhood.astype('category')
+                # data_df.neighbourhood  = data_df.neighbourhood.astype('category')
+
         return data_df
     
     def predict_price(self,request:ApartmentRequest) -> ApartmentResponse:
         input_df = self.preprocess_input(request)
         apartment_price = self.model.predict(input_df)[0]
         apartment_price = int(apartment_price)
-        
+
         response = ApartmentResponse
         response.price = apartment_price
         return response
